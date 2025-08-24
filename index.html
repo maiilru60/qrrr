@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding PhotoBooth • Илья & Алина</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        script: ['Dancing Script', 'cursive'],
+                        serif: ['Playfair Display', 'serif']
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337'
+                        },
+                        gold: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fef7f7 0%, #fce7e7 25%, #f8d7da 50%, #f5c2c7 75%, #f1aeb5 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .elegant-glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .luxury-gradient {
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 50%, #be123c 100%);
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+        }
+
+        .magical-float {
+            animation: magicalFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes magicalFloat {
+            0%, 100% { transform: translateY(0px) scale(1) rotate(0deg); }
+            25% { transform: translateY(-20px) scale(1.02) rotate(1deg); }
+            50% { transform: translateY(-10px) scale(1.01) rotate(-0.5deg); }
+            75% { transform: translateY(-25px) scale(1.03) rotate(0.5deg); }
+        }
+
+        .sparkle-text {
+            background: linear-gradient(135deg, #f43f5e 0%, #fbbf24 25%, #e11d48 50%, #d97706 75%, #be123c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes shimmer {
+            0% { filter: brightness(1) saturate(1); }
+            100% { filter: brightness(1.2) saturate(1.3); }
+        }
+
+        .camera-luxury {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+            box-shadow: inset 0 0 100px rgba(244, 63, 94, 0.1);
+        }
+
+        .luxury-button {
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+            box-shadow: 0 10px 30px rgba(244, 63, 94, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .luxury-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(244, 63, 94, 0.4);
+        }
+
+        .luxury-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .capture-pulse {
+            background: linear-gradient(135deg, #f43f5e, #fbbf24);
+            box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.7);
+            animation: luxuryPulse 2.5s infinite;
+        }
+
+        @keyframes luxuryPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.7);
+                transform: scale(1);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(244, 63, 94, 0);
+                transform: scale(1.05);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(244, 63, 94, 0);
+                transform: scale(1);
+            }
+        }
+
+        .elegant-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top: 4px solid #f43f5e;
+            width: 32px;
+            height: 32px;
+            animation: elegantSpin 1s linear infinite;
+        }
+
+        @keyframes elegantSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-bounce {
+            animation: successBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.3) rotate(-90deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .slide-in-elegant {
+            animation: slideInElegant 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes slideInElegant {
+            from { 
+                transform: translateY(100px) scale(0.9); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0) scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        .notification-luxury {
+            animation: notificationLuxury 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes notificationLuxury {
+            from { 
+                transform: translateX(400px) scale(0.8); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateX(0) scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        .gallery-compact {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 8px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .gallery-compact::-webkit-scrollbar {
+            display: none;
+        }
+
+        .photo-mini {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .photo-mini:hover {
+            transform: scale(1.1);
+            border-color: #f43f5e;
+            box-shadow: 0 8px 25px rgba(244, 63, 94, 0.3);
+        }
+
+        .zoom-elegant {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+        }
+
+        .zoom-slider {
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .zoom-slider::-webkit-slider-track {
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .zoom-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #f43f5e, #fbbf24);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+        }
+
+        .zoom-slider::-moz-range-track {
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            border: none;
+        }
+
+        .zoom-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #f43f5e, #fbbf24);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+        }
+
+        /* Улучшенная камера - без обрезки */
+        .camera-frame-luxury {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            border-radius: 32px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Полноэкранная камера для лучшего качества */
+        #video-stream {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .camera-container-full {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 10;
+        }
+
+        .welcome-entrance {
+            animation: welcomeEntrance 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes welcomeEntrance {
+            0% { 
+                transform: translateY(100px) scale(0.8) rotate(5deg); 
+                opacity: 0; 
+                filter: blur(10px);
+            }
+            50% { 
+                transform: translateY(-10px) scale(1.05) rotate(-2deg); 
+                opacity: 0.8; 
+                filter: blur(2px);
+            }
+            100% { 
+                transform: translateY(0) scale(1) rotate(0deg); 
+                opacity: 1; 
+                filter: blur(0px);
+            }
+        }
+
+        .heart-beat {
+            animation: heartBeat 2s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f43f5e, #fbbf24);
+            border-radius: 0 0 12px 12px;
+            transition: width 0.3s ease;
+        }
+
+        .camera-controls-elegant {
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            backdrop-filter: blur(20px);
+        }
+
+        /* Адаптивность для всех устройств */
+        @media (max-width: 640px) {
+            .camera-frame-luxury {
+                border-radius: 20px;
+                border-width: 2px;
+            }
+            
+            .zoom-elegant {
+                width: 280px;
+            }
+            
+            .photo-mini {
+                width: 40px;
+                height: 40px;
+                min-width: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .elegant-glass {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            
+            .zoom-elegant {
+                width: 250px;
+            }
+        }
+
+        /* Индикатор качества записи */
+        .quality-indicator {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="min-h-screen flex items-center justify-center p-6">
+        <div class="elegant-glass rounded-3xl p-10 max-w-lg w-full text-center magical-float welcome-entrance">
+            <div class="mb-10">
+                <div class="w-24 h-24 mx-auto mb-8 rounded-full luxury-gradient p-1 heart-beat">
+                    <div class="w-full h-full rounded-full bg-white flex items-center justify-center">
+                        <svg class="w-12 h-12 text-rose-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="font-script text-6xl sparkle-text font-bold mb-4">
+                    Илья & Алина
+                </h1>
+                <p class="text-gray-700 text-xl font-serif">28 августа 2025</p>
+                <div class="w-32 h-1 gold-gradient mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+            <div class="space-y-6 mb-10">
+                <p class="text-gray-800 text-xl font-semibold">Свадебная Фотобудка</p>
+                <p class="text-gray-600 text-lg">Запечатлите волшебные моменты нашего торжества</p>
+                <div class="quality-indicator inline-block">
+                    📸 4K Качество • 20 Фотографий
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <input 
+                    id="guest-name" 
+                    type="text" 
+                    placeholder="Введите ваше имя"
+                    class="w-full px-6 py-4 rounded-2xl bg-white/40 border border-white/40 text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-3 focus:ring-rose-400 focus:border-transparent transition-all text-lg font-medium"
+                >
+                <button 
+                    id="start-session" 
+                    class="w-full luxury-button text-white font-bold py-4 px-8 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed text-lg"
+                    disabled
+                >
+                    <span id="start-btn-text">Начать съёмку</span>
+                </button>
+            </div>
+            
+            <div class="mt-8 text-gray-500 text-sm">
+                <p>📸 Фотографии автоматически отправляются в Telegram</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Screen -->
+    <div id="camera-screen" class="camera-luxury hidden fixed inset-0">
+        <!-- Header -->
+        <div class="absolute top-0 left-0 right-0 p-4 z-30">
+            <div class="flex items-center justify-between">
+                <div class="elegant-glass rounded-2xl px-4 py-2 flex items-center space-x-2">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-white text-sm font-semibold">4K Live</span>
+                </div>
+                
+                <div class="elegant-glass rounded-2xl px-4 py-2">
+                    <span id="photos-remaining" class="text-white text-sm font-bold">20 осталось</span>
+                </div>
+                
+                <button id="close-camera" class="elegant-glass rounded-2xl p-3 text-white hover:bg-white/20 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Compact Gallery -->
+        <div class="absolute top-20 left-4 z-20">
+            <div class="elegant-glass rounded-2xl p-3 max-w-xs">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-white text-sm font-medium">Галерея</span>
+                    <span id="photos-taken" class="text-white text-sm font-bold bg-rose-500 px-2 py-1 rounded-full">0</span>
+                </div>
+                <div id="photo-gallery" class="gallery-compact"></div>
+            </div>
+        </div>
+
+        <!-- Full Screen Camera Preview -->
+        <div class="camera-container-full">
+            <video id="video-stream" autoplay playsinline muted></video>
+        </div>
+
+        <!-- Zoom Controls - всегда видны -->
+        <div id="zoom-controls" class="absolute left-1/2 bottom-32 transform -translate-x-1/2 w-80 max-w-sm z-20">
+            <div class="zoom-elegant p-4 rounded-2xl">
+                <div class="flex items-center space-x-4">
+                    <span class="text-white text-sm font-bold">1×</span>
+                    <input 
+                        type="range" 
+                        id="zoom-slider" 
+                        min="1" 
+                        max="8" 
+                        value="1" 
+                        step="0.1" 
+                        class="flex-1 zoom-slider"
+                    >
+                    <span class="text-white text-sm font-bold">8×</span>
+                </div>
+                <div class="text-center mt-2">
+                    <span id="zoom-value" class="text-white text-xs font-medium">Приближение: 1.0×</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="absolute bottom-0 left-0 right-0 camera-controls-elegant p-6 z-30">
+            <div class="flex items-center justify-center space-x-8">
+                <!-- Gallery Toggle -->
+                <button id="gallery-toggle" class="elegant-glass rounded-2xl p-4 text-white hover:bg-white/20 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </button>
+
+                <!-- Capture Button -->
+                <button id="capture-photo" class="capture-pulse w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-xl disabled:opacity-50">
+                    <svg id="camera-icon" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5a3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97c0-.33-.03-.65-.07-.97l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.32-.07.65-.07.97c0 .33.03.65.07.97L2.46 14.4c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.31.61.22l2.49-1c.52.39 1.06.73 1.69.98l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.25 1.17-.59 1.69-.98l2.49 1c.22.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.63Z"/>
+                    </svg>
+                    <div id="capture-loading" class="elegant-spinner hidden"></div>
+                </button>
+
+                <!-- Switch Camera -->
+                <button id="switch-camera" class="elegant-glass rounded-2xl p-4 text-white hover:bg-white/20 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Notification -->
+    <div id="success-notification" class="fixed top-6 right-6 z-50 hidden notification-luxury">
+        <div class="elegant-glass rounded-2xl p-5 flex items-center space-x-4 min-w-80">
+            <div class="flex-shrink-0">
+                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center success-bounce">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="flex-1">
+                <p class="text-white font-bold text-sm">Фото отправлено!</p>
+                <p class="text-white/70 text-xs mt-1">Успешно загружено в Telegram канал</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Notification -->
+    <div id="error-notification" class="fixed top-6 right-6 z-50 hidden notification-luxury">
+        <div class="elegant-glass rounded-2xl p-5 flex items-center space-x-4 min-w-80 border border-red-400/30">
+            <div class="flex-shrink-0">
+                <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="flex-1">
+                <p class="text-white font-bold text-sm">Ошибка отправки</p>
+                <p id="error-message" class="text-white/70 text-xs mt-1">Попробуйте ещё раз</p>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="capture-canvas" class="hidden"></canvas>
+
+    <script>
+        class LuxuryPhotoBooth {
+            constructor() {
+                this.stream = null;
+                this.facingMode = 'environment';
+                this.userName = '';
+                this.photoCount = 0;
+                this.maxPhotos = 20; // Ограничение до 20 фото
+                this.isCapturing = false;
+                this.zoomLevel = 1;
+                this.maxZoom = 8;
+                this.supportsZoom = false;
+                
+                this.initElements();
+                this.bindEvents();
+            }
+
+            initElements() {
+                // Welcome screen elements
+                this.welcomeScreen = document.getElementById('welcome-screen');
+                this.guestNameInput = document.getElementById('guest-name');
+                this.startSessionBtn = document.getElementById('start-session');
+                this.startBtnText = document.getElementById('start-btn-text');
+
+                // Camera screen elements
+                this.cameraScreen = document.getElementById('camera-screen');
+                this.videoStream = document.getElementById('video-stream');
+                this.captureBtn = document.getElementById('capture-photo');
+                this.switchCameraBtn = document.getElementById('switch-camera');
+                this.closeCameraBtn = document.getElementById('close-camera');
+                this.photoGallery = document.getElementById('photo-gallery');
+                this.photosTakenEl = document.getElementById('photos-taken');
+                this.photosRemainingEl = document.getElementById('photos-remaining');
+                this.galleryToggle = document.getElementById('gallery-toggle');
+
+                // Zoom controls
+                this.zoomControls = document.getElementById('zoom-controls');
+                this.zoomSlider = document.getElementById('zoom-slider');
+                this.zoomValue = document.getElementById('zoom-value');
+
+                // UI elements
+                this.cameraIcon = document.getElementById('camera-icon');
+                this.captureLoading = document.getElementById('capture-loading');
+                this.successNotification = document.getElementById('success-notification');
+                this.errorNotification = document.getElementById('error-notification');
+                this.errorMessage = document.getElementById('error-message');
+
+                // Canvas
+                this.canvas = document.getElementById('capture-canvas');
+                this.ctx = this.canvas.getContext('2d');
+            }
+
+            bindEvents() {
+                this.guestNameInput.addEventListener('input', (e) => {
+                    const name = e.target.value.trim();
+                    this.startSessionBtn.disabled = !name;
+                    if (name) {
+                        this.startBtnText.textContent = `Привет, ${name}! Начать съёмку`;
+                    } else {
+                        this.startBtnText.textContent = 'Начать съёмку';
+                    }
+                });
+
+                this.startSessionBtn.addEventListener('click', () => this.startSession());
+                this.captureBtn.addEventListener('click', () => this.capturePhoto());
+                this.switchCameraBtn.addEventListener('click', () => this.switchCamera());
+                this.closeCameraBtn.addEventListener('click', () => this.closeCamera());
+                this.galleryToggle.addEventListener('click', () => this.toggleGallery());
+
+                // Zoom controls
+                this.zoomSlider.addEventListener('input', (e) => this.handleZoom(parseFloat(e.target.value)));
+
+                // Enter key support
+                this.guestNameInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !this.startSessionBtn.disabled) {
+                        this.startSession();
+                    }
+                });
+
+                // Touch zoom for mobile
+                let initialDistance = null;
+                this.videoStream.addEventListener('touchstart', (e) => {
+                    if (e.touches.length === 2) {
+                        e.preventDefault();
+                        const touch1 = e.touches[0];
+                        const touch2 = e.touches[1];
+                        initialDistance = Math.hypot(
+                            touch1.clientX - touch2.clientX,
+                            touch1.clientY - touch2.clientY
+                        );
+                    }
+                });
+
+                this.videoStream.addEventListener('touchmove', (e) => {
+                    if (e.touches.length === 2 && initialDistance) {
+                        e.preventDefault();
+                        const touch1 = e.touches[0];
+                        const touch2 = e.touches[1];
+                        const currentDistance = Math.hypot(
+                            touch1.clientX - touch2.clientX,
+                            touch1.clientY - touch2.clientY
+                        );
+                        
+                        const zoomFactor = currentDistance / initialDistance;
+                        let newZoom = this.zoomLevel * zoomFactor;
+                        newZoom = Math.max(1, Math.min(this.maxZoom, newZoom));
+                        
+                        this.handleZoom(newZoom);
+                        this.zoomSlider.value = newZoom;
+                        initialDistance = currentDistance;
+                    }
+                });
+
+                this.videoStream.addEventListener('touchend', () => {
+                    initialDistance = null;
+                });
+            }
+
+            async startSession() {
+                this.userName = this.guestNameInput.value.trim();
+                if (!this.userName) return;
+
+                try {
+                    await this.startCamera();
+                    this.welcomeScreen.classList.add('hidden');
+                    this.cameraScreen.classList.remove('hidden');
+                } catch (error) {
+                    console.error('Failed to start camera:', error);
+                    this.showError('Не удалось запустить камеру');
+                }
+            }
+
+            async startCamera() {
+                if (this.stream) {
+                    this.stream.getTracks().forEach(track => track.stop());
+                }
+
+                try {
+                    // Оптимальные настройки для быстрой работы
+                    const constraints = {
+                        video: { 
+                            facingMode: this.facingMode,
+                            width: { ideal: 1920, min: 1280 },
+                            height: { ideal: 1080, min: 720 },
+                            frameRate: { ideal: 30, min: 15 }
+                        },
+                        audio: false
+                    };
+
+                    this.stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    this.videoStream.srcObject = this.stream;
+                    
+                    // Ждем загрузки метаданных
+                    await new Promise((resolve) => {
+                        this.videoStream.onloadedmetadata = resolve;
+                    });
+                    
+                    console.log(`Камера запущена: ${this.videoStream.videoWidth}x${this.videoStream.videoHeight}`);
+                    
+                    await this.checkZoomSupport();
+                    this.zoomLevel = 1;
+                    this.applyZoom();
+                    this.updatePhotosRemaining();
+                    
+                } catch (error) {
+                    console.error('Camera error:', error);
+                    // Базовый fallback
+                    try {
+                        this.stream = await navigator.mediaDevices.getUserMedia({
+                            video: { facingMode: this.facingMode },
+                            audio: false
+                        });
+                        this.videoStream.srcObject = this.stream;
+                        
+                        await new Promise((resolve) => {
+                            this.videoStream.onloadedmetadata = resolve;
+                        });
+                        
+                        await this.checkZoomSupport();
+                        this.zoomLevel = 1;
+                        this.applyZoom();
+                        this.updatePhotosRemaining();
+                    } catch (fallbackError) {
+                        console.error('Fallback camera error:', fallbackError);
+                        throw new Error('Не удалось получить доступ к камере');
+                    }
+                }
+            }
+
+            async checkZoomSupport() {
+                try {
+                    const track = this.stream.getVideoTracks()[0];
+                    const capabilities = track.getCapabilities();
+                    
+                    if (capabilities.zoom) {
+                        this.supportsZoom = true;
+                        this.maxZoom = Math.min(capabilities.zoom.max || 8, 8);
+                        this.zoomSlider.max = this.maxZoom;
+                    } else {
+                        this.supportsZoom = false;
+                    }
+                } catch (error) {
+                    console.log('Zoom capabilities check failed:', error);
+                    this.supportsZoom = false;
+                }
+            }
+
+            handleZoom(value) {
+                this.zoomLevel = parseFloat(value);
+                this.applyZoom();
+                this.zoomValue.textContent = `Приближение: ${this.zoomLevel.toFixed(1)}×`;
+            }
+
+            applyZoom() {
+                if (this.supportsZoom) {
+                    try {
+                        const track = this.stream.getVideoTracks()[0];
+                        track.applyConstraints({
+                            advanced: [{ zoom: this.zoomLevel }]
+                        }).catch(() => {
+                            // Fallback: CSS transform
+                            this.videoStream.style.transform = `scale(${this.zoomLevel})`;
+                        });
+                    } catch (error) {
+                        this.videoStream.style.transform = `scale(${this.zoomLevel})`;
+                    }
+                } else {
+                    // Fallback: CSS transform
+                    this.videoStream.style.transform = `scale(${this.zoomLevel})`;
+                }
+            }
+
+            toggleGallery() {
+                const gallery = this.photoGallery.parentElement.parentElement;
+                gallery.style.display = gallery.style.display === 'none' ? 'block' : 'none';
+            }
+
+            async switchCamera() {
+                this.facingMode = this.facingMode === 'user' ? 'environment' : 'user';
+                await this.startCamera();
+            }
+
+            closeCamera() {
+                if (this.stream) {
+                    this.stream.getTracks().forEach(track => track.stop());
+                }
+                this.cameraScreen.classList.add('hidden');
+                this.welcomeScreen.classList.remove('hidden');
+                this.zoomLevel = 1;
+            }
+
+            updatePhotosRemaining() {
+                const remaining = this.maxPhotos - this.photoCount;
+                this.photosRemainingEl.textContent = `${remaining} осталось`;
+                
+                if (remaining <= 0) {
+                    this.captureBtn.disabled = true;
+                    this.photosRemainingEl.textContent = 'Лимит достигнут';
+                    this.photosRemainingEl.className = 'text-red-400 text-sm font-bold';
+                }
+            }
+
+            async capturePhoto() {
+                if (this.isCapturing || this.photoCount >= this.maxPhotos) return;
+                
+                this.isCapturing = true;
+                this.showCaptureLoading();
+                this.showInstantCapture(); // Мгновенная визуальная обратная связь
+
+                try {
+                    // Получаем максимальное качество видео
+                    const videoWidth = this.videoStream.videoWidth || 1920;
+                    const videoHeight = this.videoStream.videoHeight || 1080;
+                    
+                    // Устанавливаем canvas в максимальном разрешении
+                    this.canvas.width = videoWidth;
+                    this.canvas.height = videoHeight;
+                    
+                    // Захватываем кадр мгновенно
+                    this.ctx.save();
+                    
+                    if (this.zoomLevel > 1) {
+                        const centerX = videoWidth / 2;
+                        const centerY = videoHeight / 2;
+                        this.ctx.translate(centerX, centerY);
+                        this.ctx.scale(this.zoomLevel, this.zoomLevel);
+                        this.ctx.translate(-centerX, -centerY);
+                    }
+                    
+                    // Рисуем кадр в высоком качестве
+                    this.ctx.drawImage(this.videoStream, 0, 0, videoWidth, videoHeight);
+                    this.ctx.restore();
+
+                    // Создаем thumbnail сразу для UI
+                    const thumbnailUrl = this.canvas.toDataURL('image/jpeg', 0.6);
+                    this.addPhotoThumbnail(thumbnailUrl);
+                    
+                    // Обновляем счетчики мгновенно
+                    this.photoCount++;
+                    this.updatePhotoCounter();
+                    this.updatePhotosRemaining();
+
+                    // Асинхронно улучшаем и отправляем фото
+                    this.processAndUploadPhoto();
+
+                } catch (error) {
+                    console.error('Capture failed:', error);
+                    this.showError('Ошибка при съёмке фото');
+                    this.photoCount--; // Откатываем счетчик при ошибке
+                    this.updatePhotoCounter();
+                    this.updatePhotosRemaining();
+                } finally {
+                    this.isCapturing = false;
+                    this.hideCaptureLoading();
+                }
+            }
+
+            showInstantCapture() {
+                // Эффект мгновенной вспышки
+                const flash = document.createElement('div');
+                flash.className = 'fixed inset-0 bg-white z-50 pointer-events-none';
+                flash.style.opacity = '0.8';
+                document.body.appendChild(flash);
+                
+                setTimeout(() => {
+                    flash.style.opacity = '0';
+                    setTimeout(() => document.body.removeChild(flash), 200);
+                }, 100);
+            }
+
+            async processAndUploadPhoto() {
+                try {
+                    // Добавляем watermark
+                    this.addElegantWatermark();
+                    
+                    // Применяем улучшения изображения
+                    this.enhanceImage();
+
+                    // Создаем высококачественный blob
+                    const blob = await this.canvasToBlob(0.92);
+                    
+                    // Отправляем асинхронно
+                    const uploadResult = await this.uploadPhoto(blob);
+                    
+                    if (uploadResult) {
+                        this.showSuccess();
+                    }
+
+                } catch (error) {
+                    console.error('Processing/Upload failed:', error);
+                    this.showError(`Ошибка отправки: ${error.message}`);
+                }
+            }
+
+            enhanceImage() {
+                // Улучшение контрастности и яркости
+                const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+                const data = imageData.data;
+                
+                const contrast = 1.1; // +10% контрастности
+                const brightness = 5;  // +5 яркости
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    // RGB каналы
+                    data[i] = Math.min(255, Math.max(0, (data[i] - 128) * contrast + 128 + brightness));     // R
+                    data[i + 1] = Math.min(255, Math.max(0, (data[i + 1] - 128) * contrast + 128 + brightness)); // G
+                    data[i + 2] = Math.min(255, Math.max(0, (data[i + 2] - 128) * contrast + 128 + brightness)); // B
+                }
+                
+                this.ctx.putImageData(imageData, 0, 0);
+            }
+
+            addElegantWatermark() {
+                const text = `${this.userName} • Илья & Алина • 28.08.2025`;
+                
+                // Масштабируем размер шрифта в зависимости от размера canvas
+                const fontSize = Math.max(24, this.canvas.width / 60);
+                
+                this.ctx.font = `bold ${fontSize}px Inter, sans-serif`;
+                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                this.ctx.strokeStyle = 'rgba(244, 63, 94, 0.8)';
+                this.ctx.lineWidth = Math.max(2, fontSize / 12);
+                this.ctx.textAlign = 'center';
+                this.ctx.textBaseline = 'bottom';
+                this.ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+                this.ctx.shadowBlur = fontSize / 2;
+                this.ctx.shadowOffsetX = 2;
+                this.ctx.shadowOffsetY = 2;
+                
+                const x = this.canvas.width / 2;
+                const y = this.canvas.height - (fontSize / 2);
+                
+                this.ctx.strokeText(text, x, y);
+                this.ctx.fillText(text, x, y);
+                
+                // Сброс тени
+                this.ctx.shadowColor = 'transparent';
+                this.ctx.shadowBlur = 0;
+                this.ctx.shadowOffsetX = 0;
+                this.ctx.shadowOffsetY = 0;
+            }
+
+            canvasToBlob(quality = 0.95) {
+                return new Promise(resolve => {
+                    this.canvas.toBlob(resolve, 'image/jpeg', quality);
+                });
+            }
+
+            async uploadPhoto(blob) {
+                try {
+                    const formData = new FormData();
+                    
+                    // Создаем File объект для лучшей совместимости
+                    const fileName = `${this.userName}_${Date.now()}.jpg`;
+                    const file = new File([blob], fileName, { 
+                        type: 'image/jpeg',
+                        lastModified: Date.now()
+                    });
+                    
+                    formData.append('photo', file);
+                    formData.append('userName', this.userName);
+
+                    console.log(`Отправляем фото: ${fileName}, размер: ${blob.size} байт`);
+
+                    const response = await fetch('/send-photo', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Upload error:', response.status, errorText);
+                        throw new Error(`HTTP ${response.status}: ${errorText.substring(0, 100)}`);
+                    }
+
+                    const result = await response.json();
+                    console.log('Фото успешно отправлено:', result);
+                    return result;
+
+                } catch (error) {
+                    console.error('Ошибка отправки фото', this.photoCount);
+                    throw error;
+                }
+            }
+
+            addPhotoThumbnail(dataUrl) {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'photo-mini slide-in-elegant relative overflow-hidden';
+                
+                const img = document.createElement('img');
+                img.src = dataUrl;
+                img.className = 'w-full h-full object-cover';
+                
+                thumbnail.appendChild(img);
+                
+                // Клик для увеличения
+                thumbnail.addEventListener('click', () => {
+                    this.showPhotoPreview(dataUrl);
+                });
+                
+                this.photoGallery.appendChild(thumbnail);
+
+                // Авто-скролл к последнему фото
+                this.photoGallery.scrollLeft = this.photoGallery.scrollWidth;
+            }
+
+            showPhotoPreview(dataUrl) {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4';
+                modal.innerHTML = `
+                    <div class="relative max-w-4xl max-h-full">
+                        <img src="${dataUrl}" class="max-w-full max-h-full object-contain rounded-2xl">
+                        <button class="absolute top-4 right-4 text-white text-2xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition">×</button>
+                    </div>
+                `;
+                
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal || e.target.tagName === 'BUTTON') {
+                        document.body.removeChild(modal);
+                    }
+                });
+                
+                document.body.appendChild(modal);
+            }
+
+            updatePhotoCounter() {
+                this.photosTakenEl.textContent = this.photoCount;
+            }
+
+            showCaptureLoading() {
+                this.cameraIcon.classList.add('hidden');
+                this.captureLoading.classList.remove('hidden');
+                this.captureBtn.disabled = true;
+            }
+
+            hideCaptureLoading() {
+                this.cameraIcon.classList.remove('hidden');
+                this.captureLoading.classList.add('hidden');
+                this.captureBtn.disabled = this.photoCount >= this.maxPhotos;
+            }
+
+            showSuccess() {
+                this.successNotification.classList.remove('hidden');
+                setTimeout(() => {
+                    this.successNotification.classList.add('hidden');
+                }, 4000);
+            }
+
+            showError(message) {
+                this.errorMessage.textContent = message;
+                this.errorNotification.classList.remove('hidden');
+                setTimeout(() => {
+                    this.errorNotification.classList.add('hidden');
+                }, 5000);
+            }
+        }
+
+        // Initialize app when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            new LuxuryPhotoBooth();
+        });
+    </script>
+</body>
+</html>
