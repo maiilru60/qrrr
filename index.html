@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -333,19 +333,13 @@
         }
 
         .progress-bar {
-            position: absolute;
-            bottom: 0;
-=======
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #f43f5e, #fbbf24);
             left: 0;
             height: 3px;
             background: linear-gradient(90deg, #f43f5e, #fbbf24);
             border-radius: 0 0 12px 12px;
             transition: width 0.3s ease;
+            position: absolute;
+            bottom: 0;
         }
 
         .camera-controls-elegant {
@@ -577,11 +571,12 @@
                 this.maxPhotos = 20; // Ограничение до 20 фото
                 this.isCapturing = false;
                 this.zoomLevel = 1;
-                this.photoBlobs = [];
-                this.isClosing = false;
                 this.maxZoom = 8;
                 this.supportsZoom = false;
                 
+                // !!! ВАЖНО: Сюда нужно будет вставить URL вашего сервера с Render !!!
+                this.serverUrl = 'https://fg-tlaz.onrender.com'; 
+
                 this.initElements();
                 this.bindEvents();
             }
@@ -635,7 +630,7 @@
                 this.startSessionBtn.addEventListener('click', () => this.startSession());
                 this.captureBtn.addEventListener('click', () => this.capturePhoto());
                 this.switchCameraBtn.addEventListener('click', () => this.switchCamera());
-                this.closeCameraBtn.addEventListener('click', async () => await this.closeCamera());
+                this.closeCameraBtn.addEventListener('click', () => this.closeCamera());
                 this.galleryToggle.addEventListener('click', () => this.toggleGallery());
 
                 // Zoom controls
@@ -690,11 +685,6 @@
             async startSession() {
                 this.userName = this.guestNameInput.value.trim();
                 if (!this.userName) return;
-
-                this.photoCount = 0;
-                this.photoBlobs = [];
-                this.photoGallery.innerHTML = '';
-                this.updatePhotoCounter();
 
                 try {
                     await this.startCamera();
@@ -816,22 +806,13 @@
                 await this.startCamera();
             }
 
-            async closeCamera() {
-                if (this.isClosing) return;
-                this.isClosing = true;
-
+            closeCamera() {
                 if (this.stream) {
                     this.stream.getTracks().forEach(track => track.stop());
                 }
-
-                if (this.photoBlobs.length > 0) {
-                    await this.createAndSendZip();
-                }
-
                 this.cameraScreen.classList.add('hidden');
                 this.welcomeScreen.classList.remove('hidden');
                 this.zoomLevel = 1;
-                this.isClosing = false;
             }
 
             updatePhotosRemaining() {
@@ -885,8 +866,8 @@
                     this.updatePhotoCounter();
                     this.updatePhotosRemaining();
 
-                    // Асинхронно улучшаем и сохраняем фото для последующей отправки
-                    this.processAndStorePhoto();
+                    // Асинхронно улучшаем и отправляем фото
+                    this.processAndUploadPhoto();
 
                 } catch (error) {
                     console.error('Capture failed:', error);
@@ -913,22 +894,27 @@
                 }, 100);
             }
 
-            async processAndStorePhoto() {
+            async processAndUploadPhoto() {
                 try {
                     // Добавляем watermark
                     this.addElegantWatermark();
                     
                     // Применяем улучшения изображения
                     this.enhanceImage();
-                    
+
                     // Создаем высококачественный blob
                     const blob = await this.canvasToBlob(0.92);
                     
-                    this.photoBlobs.push(blob);
-                    this.showSuccess('Фото сохранено!', 'Оно будет в архиве в конце сессии.', 3000);
+                    // Отправляем асинхронно
+                    const uploadResult = await this.uploadPhoto(blob);
+                    
+                    if (uploadResult) {
+                        this.showSuccess();
+                    }
+
                 } catch (error) {
-                    console.error('Processing/Storing failed:', error);
-                    this.showError(`Ошибка обработки: ${error.message}.`);
+                    console.error('Processing/Upload failed:', error);
+                    this.showError(`Ошибка отправки: ${error.message}. Попробуйте еще раз.`);
                 }
             }
 
@@ -986,81 +972,59 @@
                 });
             }
 
-            async createAndSendZip() {
-                try {
-                    this.showSuccess('Создание архива...', 'Пожалуйста, подождите...', 10000);
-                    const zip = new JSZip();
-                    this.photoBlobs.forEach((blob, index) => {
-                        const fileName = `${this.userName}_${String(index + 1).padStart(2, '0')}.jpg`;
-                        zip.file(fileName, blob);
-                    });
-
-                    const zipBlob = await zip.generateAsync({
-                        type: "blob",
-                        compression: "DEFLATE",
-                        compressionOptions: { level: 9 }
-                    });
-
-                    await this.uploadZip(zipBlob);
-                } catch (error) {
-                    console.error('Zip creation/sending failed:', error);
-                    this.showError(`Ошибка создания архива: ${error.message}`);
-                }
-            }
-
-            async uploadZip(blob) {
+            async uploadPhoto(blob) {
                 return new Promise((resolve, reject) => {
                     try {
                         this.showUploadProgress();
-
+        
                         const formData = new FormData();
-                        const fileName = `${this.userName}_photos_${Date.now()}.zip`;
-                        const file = new File([blob], fileName, { type: 'application/zip', lastModified: Date.now() });
+                        const fileName = `${this.userName}_${Date.now()}.jpg`;
+                        const file = new File([blob], fileName, { 
+                            type: 'image/jpeg',
+                            lastModified: Date.now()
+                        });
                         
-                        formData.append('archive', file); // Отправляем как 'archive'
+                        formData.append('photo', file);
                         formData.append('userName', this.userName);
-
+        
                         const xhr = new XMLHttpRequest();
-                        xhr.open('POST', 'https://t-gj37.onrender.com/send-photo'); // Используем тот же endpoint
-
+                        xhr.open('POST', `${this.serverUrl}/send-photo`);
+        
                         xhr.upload.onprogress = (event) => {
                             if (event.lengthComputable) {
                                 const percentComplete = (event.loaded / event.total) * 100;
                                 this.updateUploadProgress(percentComplete);
                             }
                         };
-
+        
                         xhr.onload = () => {
                             this.hideUploadProgress();
                             if (xhr.status >= 200 && xhr.status < 300) {
                                 const result = JSON.parse(xhr.responseText);
-                                console.log('Архив успешно отправлен:', result);
-                                this.showSuccess('Архив отправлен!', 'Все фотографии успешно загружены.');
+                                console.log('Фото успешно отправлено:', result);
                                 resolve(result);
                             } else {
                                 const error = new Error(`HTTP ${xhr.status}: ${xhr.responseText.substring(0, 100)}`);
-                                this.showError(`Ошибка отправки: ${error.message}`);
                                 reject(error);
                             }
                         };
-
+        
                         xhr.onerror = () => {
                             this.hideUploadProgress();
                             const error = new Error('Сетевая ошибка при отправке.');
-                            this.showError(error.message);
                             reject(error);
                         };
-
+        
                         xhr.send(formData);
-                        console.log(`Отправляем архив: ${fileName}, размер: ${blob.size} байт`);
+                        console.log(`Отправляем фото: ${fileName}, размер: ${blob.size} байт`);
+        
                     } catch (error) {
                         this.hideUploadProgress();
-                        this.showError(`Ошибка подготовки к отправке: ${error.message}`);
                         reject(error);
                     }
                 });
             }
-            
+
             addPhotoThumbnail(dataUrl) {
                 const thumbnail = document.createElement('div');
                 thumbnail.className = 'photo-mini slide-in-elegant relative overflow-hidden';
@@ -1141,18 +1105,12 @@
 
 
               
-            showSuccess(title = 'Фото отправлено!', message = 'Успешно загружено в Telegram канал', duration = 4000) {
-                const titleEl = this.successNotification.querySelector('p.font-bold');
-                const messageEl = this.successNotification.querySelector('p.text-xs');
-                if (titleEl) titleEl.textContent = title;
-                if (messageEl) messageEl.textContent = message;
-
+            showSuccess() {
                 this.successNotification.classList.remove('hidden');
                 setTimeout(() => {
                     this.successNotification.classList.add('hidden');
-                }, duration);
+                }, 4000);
             }
-
 
             showError(message) {
                 this.errorMessage.textContent = message;
