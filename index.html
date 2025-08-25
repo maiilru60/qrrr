@@ -725,7 +725,7 @@
                     
                     await this.checkZoomSupport();
                     this.zoomLevel = 1;
-                    this.applyZoom();
+                    this.handleZoom(1); // Инициализируем состояние зума
                     this.updatePhotosRemaining();
                     
                 } catch (error) {
@@ -744,7 +744,7 @@
                         
                         await this.checkZoomSupport();
                         this.zoomLevel = 1;
-                        this.applyZoom();
+                        this.handleZoom(1); // Инициализируем состояние зума
                         this.updatePhotosRemaining();
                     } catch (fallbackError) {
                         console.error('Fallback camera error:', fallbackError);
@@ -772,28 +772,11 @@
             }
 
             handleZoom(value) {
-                this.zoomLevel = parseFloat(value);
-                this.applyZoom();
+                this.zoomLevel = parseFloat(value);                
+                // Для плавного предпросмотра всегда используем быстрый CSS-зум,
+                // это решает проблему с лагами на iPhone.
+                this.videoStream.style.transform = `scale(${this.zoomLevel})`;
                 this.zoomValue.textContent = `Приближение: ${this.zoomLevel.toFixed(1)}×`;
-            }
-
-            applyZoom() {
-                if (this.supportsZoom) {
-                    try {
-                        const track = this.stream.getVideoTracks()[0];
-                        track.applyConstraints({
-                            advanced: [{ zoom: this.zoomLevel }]
-                        }).catch(() => {
-                            // Fallback: CSS transform
-                            this.videoStream.style.transform = `scale(${this.zoomLevel})`;
-                        });
-                    } catch (error) {
-                        this.videoStream.style.transform = `scale(${this.zoomLevel})`;
-                    }
-                } else {
-                    // Fallback: CSS transform
-                    this.videoStream.style.transform = `scale(${this.zoomLevel})`;
-                }
             }
 
             toggleGallery() {
@@ -833,7 +816,14 @@
                 this.showCaptureLoading();
                 this.showInstantCapture(); // Мгновенная визуальная обратная связь
 
+                const track = this.stream.getVideoTracks()[0];
+
                 try {
+                    // Применяем "настоящий" нативный зум только в момент съемки, если он поддерживается
+                    if (this.supportsZoom) {
+                        await track.applyConstraints({ advanced: [{ zoom: this.zoomLevel }] });
+                    }
+
                     // Получаем максимальное качество видео
                     const videoWidth = this.videoStream.videoWidth || 1920;
                     const videoHeight = this.videoStream.videoHeight || 1080;
@@ -841,41 +831,53 @@
                     // Устанавливаем canvas в максимальном разрешении
                     this.canvas.width = videoWidth;
                     this.canvas.height = videoHeight;
-                    
-                    // Захватываем кадр мгновенно
+
                     this.ctx.save();
                     
-                    if (this.zoomLevel > 1) {
+                    // Если нативный зум не поддерживается, применяем цифровой зум на canvas,
+                    // чтобы снимок соответствовал предпросмотру. CSS-трансформация на видео не влияет на захват.
+                    if (!this.supportsZoom && this.zoomLevel > 1) {
                         const centerX = videoWidth / 2;
                         const centerY = videoHeight / 2;
                         this.ctx.translate(centerX, centerY);
                         this.ctx.scale(this.zoomLevel, this.zoomLevel);
                         this.ctx.translate(-centerX, -centerY);
                     }
-                    
-                    // Рисуем кадр в высоком качестве
+
+                    // Рисуем кадр. Он будет либо нативно увеличен, либо мы его увеличим на canvas.
                     this.ctx.drawImage(this.videoStream, 0, 0, videoWidth, videoHeight);
                     this.ctx.restore();
+
+                    // После съемки сбрасываем нативный зум, чтобы он не влиял на предпросмотр
+                    if (this.supportsZoom) {
+                        await track.applyConstraints({ advanced: [{ zoom: 1 }] });
+                    }
 
                     // Создаем thumbnail сразу для UI
                     const thumbnailUrl = this.canvas.toDataURL('image/jpeg', 0.6);
                     this.addPhotoThumbnail(thumbnailUrl);
-                    
-                    // Обновляем счетчики мгновенно
+
                     this.photoCount++;
                     this.updatePhotoCounter();
                     this.updatePhotosRemaining();
 
-                    // Асинхронно улучшаем и отправляем фото
                     this.processAndUploadPhoto();
 
                 } catch (error) {
                     console.error('Capture failed:', error);
                     this.showError('Ошибка при съёмке фото');
-                    this.photoCount--; // Откатываем счетчик при ошибке
+                    this.photoCount--;
                     this.updatePhotoCounter();
                     this.updatePhotosRemaining();
                 } finally {
+                    // Гарантированно сбрасываем зум, если что-то пошло не так
+                    if (this.supportsZoom && track.getSettings().zoom !== 1) {
+                        try {
+                            await track.applyConstraints({ advanced: [{ zoom: 1 }] });
+                        } catch (resetError) {
+                            console.error('Не удалось сбросить зум после ошибки:', resetError);
+                        }
+                    }
                     this.isCapturing = false;
                     this.hideCaptureLoading();
                 }
