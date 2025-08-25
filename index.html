@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -334,6 +335,12 @@
         .progress-bar {
             position: absolute;
             bottom: 0;
+=======
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f43f5e, #fbbf24);
             left: 0;
             height: 3px;
             background: linear-gradient(90deg, #f43f5e, #fbbf24);
@@ -971,6 +978,14 @@
             async uploadPhoto(blob) {
                 try {
                     const formData = new FormData();
+                    //const formData = new FormData();
+
+                     //Индикатор загрузки
+                     this.showUploadProgress();
+
+                } catch (error) {
+                    console.error('Ошибка отправки фото', this.photoCount);
+                    throw error;
                     
                     // Создаем File объект для лучшей совместимости
                     const fileName = `${this.userName}_${Date.now()}.jpg`;
@@ -981,6 +996,17 @@
                     
                     formData.append('photo', file);
                     formData.append('userName', this.userName);
+
+                    // Индикатор загрузки
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'https://t-gj37.onrender.com/send-photo');
+                    xhr.upload.onprogress = (event) => {
+                      if (event.lengthComputable) {
+                        const percentComplete = (event.loaded / event.total) * 100;
+                        this.updateUploadProgress(percentComplete);
+                      }
+                    };
+                    xhr.send(formData);
 
                     console.log(`Отправляем фото: ${fileName}, размер: ${blob.size} байт`);
 
@@ -1060,6 +1086,30 @@
                 this.captureLoading.classList.add('hidden');
                 this.captureBtn.disabled = this.photoCount >= this.maxPhotos;
             }
+            showUploadProgress() {
+            // Создаем и показываем progress bar
+            this.progressBar = document.createElement('div');
+            this.progressBar.className = 'progress-bar';
+            this.progressBar.style.width = '0%';
+            this.cameraScreen.appendChild(this.progressBar);
+          }
+
+            updateUploadProgress(percent) {
+                // Обновляем ширину progress bar
+                if (this.progressBar) {
+                  this.progressBar.style.width = `${percent}%`;
+                }
+              }
+          
+              hideUploadProgress() {
+                // Прячем progress bar
+                if (this.progressBar) {
+                  this.progressBar.remove();
+                  this.progressBar = null;
+                }
+              }
+
+
 
             showSuccess() {
                 this.successNotification.classList.remove('hidden');
